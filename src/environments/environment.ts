@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  DotNetTemplateUrl : 'http://localhost:5000'
+  expireTime: 4 * 1000 * 60 * 60
 };

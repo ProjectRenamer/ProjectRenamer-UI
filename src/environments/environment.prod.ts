@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  DotNetTemplateUrl : 'http://localhost:8081'
+  expireTime: 4 * 1000 * 60 * 60
 };

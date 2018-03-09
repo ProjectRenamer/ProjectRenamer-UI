@@ -8,6 +8,7 @@ import { environment } from '@env/environment';
 import { GenerateProjectRequest, KeyValuePair } from '@app/home/requests/GenerateProjectRequest';
 import { GenerateProjectResponse } from '@app/home/responses/GenerateProjectResponse';
 import { DownloadProjectRequest } from '@app/home/requests/DownloadProjectReqeust';
+import { StorageService } from '@app/core/services/storage-service';
 
 
 @Component({
@@ -17,11 +18,15 @@ import { DownloadProjectRequest } from '@app/home/requests/DownloadProjectReqeus
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private httpClient: HttpClient) {
-  }
-
   generateProjectRequest: GenerateProjectRequest = new GenerateProjectRequest();
   currentKV: KeyValuePair<string, string> = new KeyValuePair<string, string>();
+  webApiUrl: string = '';
+
+  constructor(private httpClient: HttpClient, private storageService: StorageService) {
+    this.webApiUrl = this.storageService.GetValueFromLocal(this.storageService.webApiUrlKey);
+  }
+
+
 
   ngOnInit() {
   }
@@ -36,11 +41,16 @@ export class HomePageComponent implements OnInit {
   }
 
   generate() {
+    if (this.webApiUrl === null || this.webApiUrl === '') {
+      alert('Web Api End-Point must be expressed');
+      return;
+    }
+
     this.httpClient
-      .post<GenerateProjectResponse>(environment.DotNetTemplateUrl + '/generator/', this.generateProjectRequest)
+      .post<GenerateProjectResponse>(this.webApiUrl + '/generator/', this.generateProjectRequest)
       .subscribe((response) => {
         let downloadProjectRequest = new DownloadProjectRequest(response.token);
-        this.httpClient.post(environment.DotNetTemplateUrl + '/download/', downloadProjectRequest, { responseType: 'blob' })
+        this.httpClient.post(this.webApiUrl + '/download/', downloadProjectRequest, { responseType: 'blob' })
           .subscribe((response) => {
             const blob = new Blob([response], { type: 'application/zip' });
             const url = window.URL.createObjectURL(blob);
@@ -55,5 +65,10 @@ export class HomePageComponent implements OnInit {
           );
       }
       );
+  }
+
+  setWebApiUrl(url: string) {
+    this.webApiUrl = url;
+    this.storageService.SaveValueToLocal(this.storageService.webApiUrlKey, url, new Date(Date.now() + environment.expireTime));
   }
 }
