@@ -63,6 +63,6 @@ export class StorageService {
 
     public IsValueExist(key: string): boolean {
         const valuesStr = localStorage.getItem(key);
-        return (valuesStr != undefined && valuesStr != null);
+        return (valuesStr != undefined && valuesStr != null && valuesStr != '');
     }
 }
