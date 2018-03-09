@@ -24,7 +24,7 @@ export class CoreModule {
       throw new Error('CoreModule is already loaded. Import only in AppModule');
     }
     if (!storageService.IsValueExist(this.storageService.webApiUrlKey)) {
-      this.storageService.SaveValueToLocal(this.storageService.webApiUrlKey, 'http://localhost:80', new Date(environment.expireTime));
+      this.storageService.SaveValueToLocal(this.storageService.webApiUrlKey, 'http://localhost:80', new Date(Date.now() + environment.expireTime));
     }
   }
 }
