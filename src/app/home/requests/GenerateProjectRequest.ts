@@ -1,5 +1,4 @@
 export class GenerateProjectRequest {
-    projectName: string;
     repositoryLink: string;
     renamePairs: KeyValuePair<string, string>[] = [];
     branchName: string = 'master';
