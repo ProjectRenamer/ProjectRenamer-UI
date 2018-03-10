@@ -2,6 +2,7 @@
 
 # We label our stage as ‘builder’
 FROM node:9.2-alpine as builder
+LABEL maintainer="ademcatamak@gmail.com"
 
 COPY package.json ./
 
