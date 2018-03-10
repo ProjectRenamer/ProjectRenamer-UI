@@ -4,24 +4,17 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` or `npm start` for a dev server . Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+If you use `vscode` and you have `Debugger for Chrome`, (after npm start or ng serve command) you can hit F5 and start debugging code.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Using
 
-## Build
+After execution of `ng serve` or `npm start`, you can reach web page over `http://localhost:4200/`. When you supply required parameters, "Generate" button turns active. When hit that button, your desired repository is cloning and revised. After changing keywords, copy of changed repository contents are downloaded as a ZIP file.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+![ui](https://preview.ibb.co/bK42YS/project_renamer_ui.png)
 
-## Running unit tests
+NOTE : There is input field at the bottom of page. Via this field, you can give information about what is end point of project-renamer-webapi.
+Forexample: If you download ![projectrenamer-web-api project code](https://github.com/ProjectRenamer/ProjectRenamer-WebApi) and run it locally, you can fill `http://localhost:5000/`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+![web-api-url](https://preview.ibb.co/k0o1Sn/web_api_url.png)
