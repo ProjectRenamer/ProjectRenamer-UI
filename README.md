@@ -17,6 +17,6 @@ After execution of `ng serve` or `npm start`, you can reach web page over `http:
 ![ui](https://preview.ibb.co/bK42YS/project_renamer_ui.png)
 
 NOTE : There is input field at the bottom of page. Via this field, you can give information about what is end point of project-renamer-webapi.
-Forexample: If you download ![projectrenamer-web-api project code](https://github.com/ProjectRenamer/ProjectRenamer-WebApi) and run it locally, you can fill `http://localhost:5000/`
+Forexample: If you download [projectrenamer-web-api project code](https://github.com/ProjectRenamer/ProjectRenamer-WebApi) and run it locally, you can fill `http://localhost:5000/`
 
 ![web-api-url](https://preview.ibb.co/k0o1Sn/web_api_url.png)
