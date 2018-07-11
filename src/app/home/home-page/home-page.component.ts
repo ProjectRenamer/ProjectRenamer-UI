@@ -21,6 +21,7 @@ export class HomePageComponent implements OnInit {
   generateProjectRequest: GenerateProjectRequest = new GenerateProjectRequest();
   currentKV: KeyValuePair<string, string> = new KeyValuePair<string, string>();
   webApiUrl: string = '';
+  isProd = environment.production;
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) {
     this.webApiUrl = this.storageService.GetValueFromLocal(this.storageService.webApiUrlKey);

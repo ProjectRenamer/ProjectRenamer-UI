@@ -80,7 +80,7 @@
 
 <div class="row" style="height: 20px;"> </div>
 
-<div class="row navbar navbar-fixed-bottom">
+<div class="row navbar navbar-fixed-bottom" *ngIf="!isProd">
   <label class="col-xs-3">Web Api Url</label>
   <div class="col-xs-6">
     <input class="form-control" type="text" [(ngModel)]="webApiUrl" name="webApiUrl" placeholder="http://web-api.com/" />
