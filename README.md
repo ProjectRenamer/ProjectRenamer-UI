@@ -4,6 +4,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 You  can reach docker-container over ![this link](https://hub.docker.com/r/projectrenamer/projectrenamer-ui/) 
 
+You  can reach live web sites over ![this link](https://project-renamer.azurewebsites.net/) 
+
+
 ## Development server
 
 Run `ng serve` or `npm start` for a dev server . Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
