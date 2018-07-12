@@ -24,9 +24,13 @@ export class HomePageComponent implements OnInit {
   isProd = environment.production;
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) {
-    this.webApiUrl = this.storageService.GetValueFromLocal(this.storageService.webApiUrlKey);
+    if (this.isProd) {
+      this.webApiUrl = environment.renamerApiUrl;
+    }
+    else {
+      this.webApiUrl = this.storageService.GetValueFromLocal(this.storageService.webApiUrlKey);
+    }
   }
-
 
 
   ngOnInit() {
