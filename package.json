@@ -5,7 +5,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:azure": "ng serve --configuration=azure",
     "build": "ng build",
+    "build:azure": "ng build --configuration=azure",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
