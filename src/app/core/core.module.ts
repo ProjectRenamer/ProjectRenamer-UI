@@ -1,20 +1,24 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CustomErrorHandler } from '@app/core/error-handling/custom-error-handler';
 import { StorageService } from '@app/core/services/storage-service';
 import { environment } from '@env/environment';
+import { CustomNotificationService } from '@app/core/services/custom-notification.service';
 
 @NgModule({
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   declarations: [],
   providers: [
     CustomErrorHandler,
-    StorageService
+    StorageService,
+    CustomNotificationService
   ]
 })
 export class CoreModule {

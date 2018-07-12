@@ -9,6 +9,7 @@ import { GenerateProjectRequest, KeyValuePair } from '@app/home/requests/Generat
 import { GenerateProjectResponse } from '@app/home/responses/GenerateProjectResponse';
 import { DownloadProjectRequest } from '@app/home/requests/DownloadProjectReqeust';
 import { StorageService } from '@app/core/services/storage-service';
+import { CustomNotificationService, CustomNotificationMessage } from '@app/core/services/custom-notification.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class HomePageComponent implements OnInit {
   webApiUrl: string = '';
   isProd = environment.production;
 
-  constructor(private httpClient: HttpClient, private storageService: StorageService) {
+  constructor(private httpClient: HttpClient, private storageService: StorageService, private customNotificationService: CustomNotificationService) {
     if (this.isProd) {
       this.webApiUrl = environment.renamerApiUrl;
     }
@@ -47,19 +48,22 @@ export class HomePageComponent implements OnInit {
 
   generate() {
     if (this.webApiUrl === null || this.webApiUrl === '') {
-      alert('Web Api End-Point must be expressed');
-      return;
+      throw new CustomError('Web Api End-Point must be expressed');
     }
+
+    this.customNotificationService.Info({ MessageContent: 'Proje üzerinde değişiklik talebi oluşturuluyor' });
 
     this.httpClient
       .post<GenerateProjectResponse>(this.webApiUrl + '/generator/', this.generateProjectRequest)
       .subscribe((response) => {
+        this.customNotificationService.Info({ MessageContent: 'Proje indirilmeye başlanacak' });
         let downloadProjectRequest = new DownloadProjectRequest(response.token);
         this.httpClient.post(this.webApiUrl + '/download/', downloadProjectRequest, { responseType: 'blob' })
           .subscribe((response) => {
             const blob = new Blob([response], { type: 'application/zip' });
             const url = window.URL.createObjectURL(blob);
             window.open(url);
+            this.customNotificationService.Success({ MessageContent: 'İşlem Tamamlandı' });
           },
             (err: HttpErrorResponse) => {
               if (err.status === 404) {

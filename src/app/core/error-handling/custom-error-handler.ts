@@ -1,26 +1,27 @@
 import { Injectable, ErrorHandler } from '@angular/core';
 import { CustomError } from './custom-error';
+import { CustomNotificationService } from '@app/core/services/custom-notification.service';
 
 @Injectable()
 export class CustomErrorHandler implements ErrorHandler {
 
-    constructor() { }
+    constructor(private customNotificationService: CustomNotificationService) { }
 
     handleError(error: any): void {
+
+        console.log(error);
+
         if (error.error !== undefined && error.error !== null) {
             error = error.error;
         }
         if (error.friendlyMessage !== undefined && error.friendlyMessage !== null) {
-            console.log(error);
-            alert(error.friendlyMessage);
+            this.customNotificationService.Error({ MessageContent: error.friendlyMessage });
         }
         else if (error.status === 401) {
-            alert('Yetkisiz erişim');
-            console.log(error);
+            this.customNotificationService.Error({ MessageContent: 'Yetkisiz erişim' });
         }
         else {
-            alert('Beklenmedik bir hata oluştu');
-            console.log(error);
+            this.customNotificationService.Error({ MessageContent: 'Beklenmedik bir hata oluştu' });
         }
     }
 }
