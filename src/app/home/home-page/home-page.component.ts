@@ -51,19 +51,19 @@ export class HomePageComponent implements OnInit {
       throw new CustomError('Web Api End-Point must be expressed');
     }
 
-    this.customNotificationService.Info({ MessageContent: 'Proje üzerinde değişiklik talebi oluşturuluyor' });
+    this.customNotificationService.Info({ MessageContent: 'Project refactor request is sent to server' });
 
     this.httpClient
       .post<GenerateProjectResponse>(this.webApiUrl + '/generator/', this.generateProjectRequest)
       .subscribe((response) => {
-        this.customNotificationService.Info({ MessageContent: 'Proje indirilmeye başlanacak' });
+        this.customNotificationService.Info({ MessageContent: 'Project download process will be start' });
         let downloadProjectRequest = new DownloadProjectRequest(response.token);
         this.httpClient.post(this.webApiUrl + '/download/', downloadProjectRequest, { responseType: 'blob' })
           .subscribe((response) => {
             const blob = new Blob([response], { type: 'application/zip' });
             const url = window.URL.createObjectURL(blob);
             window.open(url);
-            this.customNotificationService.Success({ MessageContent: 'İşlem Tamamlandı' });
+            this.customNotificationService.Success({ MessageContent: 'Operation is completed' });
           },
             (err: HttpErrorResponse) => {
               if (err.status === 404) {

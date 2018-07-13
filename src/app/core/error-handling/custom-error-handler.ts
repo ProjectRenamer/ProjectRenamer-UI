@@ -18,10 +18,10 @@ export class CustomErrorHandler implements ErrorHandler {
             this.customNotificationService.Error({ MessageContent: error.friendlyMessage });
         }
         else if (error.status === 401) {
-            this.customNotificationService.Error({ MessageContent: 'Yetkisiz erişim' });
+            this.customNotificationService.Error({ MessageContent: 'Unauthorized Request' });
         }
         else {
-            this.customNotificationService.Error({ MessageContent: 'Beklenmedik bir hata oluştu' });
+            this.customNotificationService.Error({ MessageContent: 'Unexpected error occurs' });
         }
     }
 }
