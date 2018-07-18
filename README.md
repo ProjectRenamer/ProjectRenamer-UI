@@ -1,6 +1,7 @@
 # ProjectRenamer-UI
 
 [![Build Status](https://travis-ci.org/ProjectRenamer/ProjectRenamer-UI.svg?branch=master)](https://travis-ci.org/ProjectRenamer/ProjectRenamer-UI)
+[![Docker Pulls](https://img.shields.io/docker/pulls/projectrenamer/projectrenamer-ui.svg)](https://hub.docker.com/r/projectrenamer/projectrenamer-ui)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.9.
 
