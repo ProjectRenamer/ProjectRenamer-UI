@@ -22,10 +22,10 @@ export class HomePageComponent implements OnInit {
   generateProjectRequest: GenerateProjectRequest = new GenerateProjectRequest();
   currentKV: KeyValuePair<string, string> = new KeyValuePair<string, string>();
   webApiUrl: string = '';
-  isProd = environment.production;
+  renamerApiFixed = environment.renamerApiFixed;
 
   constructor(private httpClient: HttpClient, private storageService: StorageService, private customNotificationService: CustomNotificationService) {
-    if (this.isProd) {
+    if (this.renamerApiFixed) {
       this.webApiUrl = environment.renamerApiUrl;
     }
     else {

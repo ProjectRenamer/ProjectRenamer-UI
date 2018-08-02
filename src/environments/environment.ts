@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
   expireTime: 4 * 1000 * 60 * 60,
-  renamerApiUrl : 'http://localhost:5000'
+  renamerApiUrl: 'http://localhost:5000',
+  renamerApiFixed: false
 };
