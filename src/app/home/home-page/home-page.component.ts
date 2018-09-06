@@ -1,15 +1,18 @@
-import { Component, OnInit, KeyValueDiffers } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { CustomError } from '@app/core/error-handling/custom-error';
 import { environment } from '@env/environment';
 
+import { saveAs } from 'file-saver/FileSaver';
+
+import { CustomNotificationService } from '@app/core/services/custom-notification.service';
+import { StorageService } from '@app/core/services/storage-service';
+
 import { GenerateProjectRequest, KeyValuePair } from '@app/home/requests/GenerateProjectRequest';
 import { GenerateProjectResponse } from '@app/home/responses/GenerateProjectResponse';
 import { DownloadProjectRequest } from '@app/home/requests/DownloadProjectReqeust';
-import { StorageService } from '@app/core/services/storage-service';
-import { CustomNotificationService, CustomNotificationMessage } from '@app/core/services/custom-notification.service';
 
 
 @Component({
@@ -61,8 +64,9 @@ export class HomePageComponent implements OnInit {
         this.httpClient.post(this.webApiUrl + '/download/', downloadProjectRequest, { responseType: 'blob' })
           .subscribe((response) => {
             const blob = new Blob([response], { type: 'application/zip' });
-            const url = window.URL.createObjectURL(blob);
-            window.open(url);
+            let fileName = String(Date.now()) + ".zip";
+            saveAs(blob, fileName);
+
             this.customNotificationService.Success({ MessageContent: 'Operation is completed' });
           },
             (err: HttpErrorResponse) => {
