@@ -6,11 +6,8 @@ export class CustomSpinnerService {
     private showSubject = new Subject<string>();
     private hideSubject = new Subject<string>();
 
-    public Show(message?: string) {
-        if (message == null || message === undefined || message === '') {
-            message = 'Please Wait';
-        }
-        this.showSubject.next(message);
+    public Show() {
+        this.showSubject.next('');
     }
 
     public Hide() {

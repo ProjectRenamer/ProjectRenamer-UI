@@ -10,9 +10,9 @@ import { saveAs } from 'file-saver/FileSaver';
 import { CustomNotificationService } from '@app/core/services/custom-notification.service';
 import { StorageService } from '@app/core/services/storage-service';
 
-import { GenerateProjectRequest, KeyValuePair } from '@app/home/requests/GenerateProjectRequest';
+import { GenerateProjectRequest, KeyValuePair } from '@app/home/requests/generate-project-request';
 import { GenerateProjectResponse } from '@app/home/responses/GenerateProjectResponse';
-import { DownloadProjectRequest } from '@app/home/requests/DownloadProjectReqeust';
+import { DownloadProjectRequest } from '@app/home/requests/download-project-request';
 import { CustomSpinnerService } from '@app/core/services/custom-spinner.service';
 
 
@@ -64,12 +64,12 @@ export class HomePageComponent implements OnInit {
 
     this.httpClient
       .post<GenerateProjectResponse>(this.webApiUrl + '/generator/', this.generateProjectRequest)
-      .subscribe((response) => {
+      .subscribe((generatorResponse) => {
         this.customNotificationService.Info({ MessageContent: 'Project download process will be start' });
-        const downloadProjectRequest = new DownloadProjectRequest(response.token);
+        const downloadProjectRequest = new DownloadProjectRequest(generatorResponse.token);
         this.httpClient.post(this.webApiUrl + '/download/', downloadProjectRequest, { responseType: 'blob' })
-          .subscribe((response) => {
-            const blob = new Blob([response], { type: 'application/zip' });
+          .subscribe((downloadResponse) => {
+            const blob = new Blob([downloadResponse], { type: 'application/zip' });
             const fileName = String(Date.now()) + '.zip';
             saveAs(blob, fileName);
 

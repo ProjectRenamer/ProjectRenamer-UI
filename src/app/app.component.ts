@@ -11,10 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
   token = localStorage.getItem('auth-token');
-  spinnerMessage = '';
-
 
   @ViewChild(ToastContainerDirective) toastContainer: ToastContainerDirective;
 
@@ -22,6 +19,7 @@ export class AppComponent {
     private customNotificationService: CustomNotificationService,
     private customSpinnerService: CustomSpinnerService,
     private spinner: NgxSpinnerService) {
+
     this.toastrService.overlayContainer = this.toastContainer;
 
     this.customNotificationService.ObserveError().subscribe(message => {
@@ -40,8 +38,7 @@ export class AppComponent {
       this.toastrService.success(message.MessageContent, message.MessageTitle);
     });
 
-    this.customSpinnerService.ObserveShow().subscribe(message => {
-      this.spinnerMessage = message;
+    this.customSpinnerService.ObserveShow().subscribe(() => {
       this.spinner.show();
     });
 

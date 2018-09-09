@@ -29,7 +29,6 @@ export class CustomNotificationService {
         this.successNotification.next(notificationMessage);
     }
 
-
     public ObserveError(): Observable<CustomNotificationMessage> {
         return this.errorNotification.asObservable();
     }
