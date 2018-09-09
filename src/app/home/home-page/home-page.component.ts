@@ -13,6 +13,7 @@ import { StorageService } from '@app/core/services/storage-service';
 import { GenerateProjectRequest, KeyValuePair } from '@app/home/requests/GenerateProjectRequest';
 import { GenerateProjectResponse } from '@app/home/responses/GenerateProjectResponse';
 import { DownloadProjectRequest } from '@app/home/requests/DownloadProjectReqeust';
+import { CustomSpinnerService } from '@app/core/services/custom-spinner.service';
 
 
 @Component({
@@ -24,10 +25,13 @@ export class HomePageComponent implements OnInit {
 
   generateProjectRequest: GenerateProjectRequest = new GenerateProjectRequest();
   currentKV: KeyValuePair<string, string> = new KeyValuePair<string, string>();
-  webApiUrl: string = '';
+  webApiUrl = '';
   renamerApiFixed = environment.renamerApiFixed;
 
-  constructor(private httpClient: HttpClient, private storageService: StorageService, private customNotificationService: CustomNotificationService) {
+  constructor(private httpClient: HttpClient,
+    private storageService: StorageService,
+    private customNotificationService: CustomNotificationService,
+    private customSpinnerService: CustomSpinnerService) {
     if (this.renamerApiFixed) {
       this.webApiUrl = environment.renamerApiUrl;
     }
@@ -54,20 +58,24 @@ export class HomePageComponent implements OnInit {
       throw new CustomError('Web Api End-Point must be expressed');
     }
 
+    this.customSpinnerService.Show();
+
     this.customNotificationService.Info({ MessageContent: 'Project refactor request is sent to server' });
 
     this.httpClient
       .post<GenerateProjectResponse>(this.webApiUrl + '/generator/', this.generateProjectRequest)
       .subscribe((response) => {
         this.customNotificationService.Info({ MessageContent: 'Project download process will be start' });
-        let downloadProjectRequest = new DownloadProjectRequest(response.token);
+        const downloadProjectRequest = new DownloadProjectRequest(response.token);
         this.httpClient.post(this.webApiUrl + '/download/', downloadProjectRequest, { responseType: 'blob' })
           .subscribe((response) => {
             const blob = new Blob([response], { type: 'application/zip' });
-            let fileName = String(Date.now()) + ".zip";
+            const fileName = String(Date.now()) + '.zip';
             saveAs(blob, fileName);
 
             this.customNotificationService.Success({ MessageContent: 'Operation is completed' });
+
+            this.customSpinnerService.Hide();
           },
             (err: HttpErrorResponse) => {
               if (err.status === 404) {

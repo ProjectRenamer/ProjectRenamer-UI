@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 import { CustomNotificationService } from '@app/core/services/custom-notification.service';
+import { CustomSpinnerService } from '@app/core/services/custom-spinner.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +13,15 @@ import { CustomNotificationService } from '@app/core/services/custom-notificatio
 export class AppComponent {
   title = 'app';
   token = localStorage.getItem('auth-token');
-  roles = [];
+  spinnerMessage = '';
+
 
   @ViewChild(ToastContainerDirective) toastContainer: ToastContainerDirective;
 
-  constructor(private toastrService: ToastrService, private customNotificationService: CustomNotificationService) {
-  }
-
-  ngOnInit() {
+  constructor(private toastrService: ToastrService,
+    private customNotificationService: CustomNotificationService,
+    private customSpinnerService: CustomSpinnerService,
+    private spinner: NgxSpinnerService) {
     this.toastrService.overlayContainer = this.toastContainer;
 
     this.customNotificationService.ObserveError().subscribe(message => {
@@ -35,6 +38,15 @@ export class AppComponent {
 
     this.customNotificationService.ObserveSuccess().subscribe(message => {
       this.toastrService.success(message.MessageContent, message.MessageTitle);
+    });
+
+    this.customSpinnerService.ObserveShow().subscribe(message => {
+      this.spinnerMessage = message;
+      this.spinner.show();
+    });
+
+    this.customSpinnerService.ObserveHide().subscribe(() => {
+      this.spinner.hide();
     });
   }
 }

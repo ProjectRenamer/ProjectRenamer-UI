@@ -7,6 +7,7 @@ import { CustomErrorHandler } from '@app/core/error-handling/custom-error-handle
 import { StorageService } from '@app/core/services/storage-service';
 import { environment } from '@env/environment';
 import { CustomNotificationService } from '@app/core/services/custom-notification.service';
+import { CustomSpinnerService } from '@app/core/services/custom-spinner.service';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { CustomNotificationService } from '@app/core/services/custom-notificatio
   providers: [
     CustomErrorHandler,
     StorageService,
-    CustomNotificationService
+    CustomNotificationService,
+    CustomSpinnerService
   ]
 })
 export class CoreModule {
@@ -28,7 +30,11 @@ export class CoreModule {
       throw new Error('CoreModule is already loaded. Import only in AppModule');
     }
     if (!storageService.IsValueExist(this.storageService.webApiUrlKey)) {
-      this.storageService.SaveValueToLocal(this.storageService.webApiUrlKey, environment.renamerApiUrl, new Date(Date.now() + environment.expireTime));
+      {
+        this.storageService.SaveValueToLocal(this.storageService.webApiUrlKey,
+          environment.renamerApiUrl,
+          new Date(Date.now() + environment.expireTime));
+      }
     }
   }
 }
