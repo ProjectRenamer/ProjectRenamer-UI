@@ -63,7 +63,7 @@ export class HomePageComponent implements OnInit {
     this.customNotificationService.Info({ MessageContent: 'Project refactor request is sent to server' });
 
     this.httpClient
-      .post<GenerateProjectResponse>(this.webApiUrl + '/generator/', this.generateProjectRequest)
+      .post<GenerateProjectResponse>(this.webApiUrl + '/generate-over-git/', this.generateProjectRequest)
       .subscribe((generatorResponse) => {
         this.customNotificationService.Info({ MessageContent: 'Project download process will be start' });
         const downloadProjectRequest = new DownloadProjectRequest(generatorResponse.token);
