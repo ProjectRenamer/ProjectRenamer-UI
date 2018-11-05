@@ -3,18 +3,21 @@ import { CoreModule } from '@app/core/core.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 import { appRouter } from './app.routing';
 
 import { CustomErrorHandler } from '@app/core/error-handling/custom-error-handler';
+
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
+import { FileSelectDirective } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FileSelectDirective
   ],
   imports: [
     appRouter,
