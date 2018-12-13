@@ -3,7 +3,7 @@ install:
 - nvm install 8.9.1
 
 script:
-  - ./build.sh --azure_uri=$azure_uri --azure_uname=$azure_uname --azure_pass=$azure_pass
+  - ./build.sh --azure_uri=$azure_uri --azure_uname=$azure_uname --azure_pass=$azure_pass --branchName=$TRAVIS_BRANCH
 
 notifications:
   email:
